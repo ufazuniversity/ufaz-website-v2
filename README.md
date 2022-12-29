@@ -1,2 +1,2 @@
 # ufaz-website-v2
-The renewed version on the website of UFAZ.
+The renewed version of the website of UFAZ.
