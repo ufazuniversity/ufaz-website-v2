@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -xe; python manage.py migrate --noinput
+python manage.py migrate --noinput
 
 if [ "$DJANGO_SUPERUSER_USERNAME" ]
 then
