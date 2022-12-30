@@ -10,6 +10,6 @@
     "tailwindcss": "^3.2.4"
   },
   "scripts": {
-    "build": "tailwind build ../static/css/tailwind.css -o ../static/css/style.css && cleancss -o ../static/css/style.min.css ../static/css/style.css"
+    "build": "tailwind build ../website/static/css/tailwind.css -o ../website/static/css/style.css && cleancss -o ../website/static/css/style.min.css ../website/static/css/style.css"
   }
 }
