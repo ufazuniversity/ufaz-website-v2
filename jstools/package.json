@@ -1,0 +1,15 @@
+{
+  "name": "ufaz-website-v2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "clean-css-cli": "^5.6.1",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
+  },
+  "scripts": {
+    "build": "tailwind build ../website/static/css/tailwind.css -o ../website/static/css/style.css && cleancss -o ../website/static/css/style.min.css ../website/static/css/style.css"
+  }
+}
