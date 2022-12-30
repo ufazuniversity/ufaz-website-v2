@@ -1,5 +1,16 @@
-# Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.11.1-slim-bullseye
+FROM node:19.3.0-alpine as node
+
+COPY . /app
+
+WORKDIR /app/jstools
+
+# Install npm packages
+RUN npm install
+
+RUN npm run build
+RUN rm -rf node_modules
+
+FROM python:3.11.1-slim-bullseye as python
 
 RUN useradd wagtail
 
@@ -12,8 +23,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libpq-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
-    libwebp-dev \
-    && rm -rf /var/lib/apt/lists/*
+    libwebp-dev
 
 
 ENV POETRY_HOME=/opt/poetry
@@ -26,9 +36,6 @@ RUN poetry install --no-interaction --no-ansi -vvv
 
 ## Install the application server.
 RUN .venv/bin/pip install "gunicorn==20.1.0"
-
-# Remove poetry
-RUN rm -rf /opt/poetry
 
 # Set environment variables.
 # 1. Force Python stdout and stderr streams to be unbuffered.
@@ -43,7 +50,7 @@ ENV PYTHONUNBUFFERED=1 \
 RUN chown wagtail:wagtail /app
 
 # Copy the source code of the project into the container.
-COPY --chown=wagtail:wagtail . .
+COPY --chown=wagtail:wagtail --from=node /app .
 
 ENV PATH=".venv/bin:$PATH"
 
