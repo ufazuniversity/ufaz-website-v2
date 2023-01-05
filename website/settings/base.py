@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail",
+    "wagtail.contrib.modeladmin",
+    "wagtailmenus",
     "modelcluster",
     "taggit",
     "django.contrib.admin",
@@ -74,6 +76,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wagtailmenus.context_processors.wagtailmenus"
             ],
         },
     },
