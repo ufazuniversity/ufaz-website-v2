@@ -1,0 +1,9 @@
+{% if menu_items %}
+    <ul class="sub-menu">
+    {% for item in menu_items %}
+        <li class="{{ item.active_class }}">
+            <a href="{{ item.href }}">{{ item.text }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
