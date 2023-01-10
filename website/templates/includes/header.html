@@ -1,0 +1,16 @@
+{% load menu_tags static %}
+
+<header id="site-header">
+    <div class="flex bg-indigo-900 sticky">
+        <div class="w-1/4 p-4 bg-white">
+            <img class="max-w-full" src="{% static '/img/logo.png' %}" alt="">
+        </div>
+    </div>
+    <div class="p-4 py-6 text-lg bg-slate-100 z-50">
+        <div class="mb-4">
+        {% flat_menu 'secondary' %}
+        </div>
+        {% main_menu %}
+    </div>
+    <div class="overlay bg-black/10 -z-10 absolute top-0 left-0 right-0 bottom-0"></div>
+</header>
