@@ -4,22 +4,63 @@ import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import rev from "gulp-rev";
+import rollup from "rollup-stream";
+import path from "path";
+import source from "vinyl-source-stream";
+import buffer from "vinyl-buffer";
+import { fileURLToPath } from "url";
 
 
-const BUILD_DIR = '../static/dist'
 
+const __filename = fileURLToPath(import.meta.url);
+const PROJECT_DIR = path.dirname(path.dirname(__filename));
+const BUILD_DIR = `${PROJECT_DIR}/static/dist`;
+const CSS_DEST_DIR = `${BUILD_DIR}/css`;
+const JS_DEST_DIR = `${BUILD_DIR}/js`;
+
+
+const STYLESHEETS = ["/website/static/css/base.css"];
+
+// Should be relative to the PROJECT_DIR
+const SCRIPTS = ["/website/static/js/base.js"];
+
+/* Process specified css stylesheets */
 gulp.task("css", () => {
-  const stylesheets = ["/website/static/css/base.css"];
   const plugins = [tailwindcss, autoprefixer, cssnano];
-  const dest = BUILD_DIR + '/css'
 
   return gulp
-    .src(stylesheets, { root: "../" })
+    .src(STYLESHEETS, { root: "../" })
     .pipe(postcss(plugins))
     .pipe(rev())
-    .pipe(gulp.dest(dest))
-    .pipe(rev.manifest('css-manifest.json'))
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(CSS_DEST_DIR))
+    .pipe(rev.manifest("css-manifest.json"))
+    .pipe(gulp.dest(CSS_DEST_DIR));
 });
 
-gulp.task("default", gulp.series("css"));
+function js(done) {
+  const tasks = SCRIPTS.map((script) => {
+    script = `${PROJECT_DIR}${script}`
+    let filename = path.basename(script);
+    function bundleJS() {
+      return rollup({
+        input: script,
+        format: "es",
+      })
+        .pipe(source(filename))
+        .pipe(buffer())
+        .pipe(rev())
+        .pipe(gulp.dest(JS_DEST_DIR))
+        .pipe(rev.manifest("js-manifest.json"))
+        .pipe(gulp.dest(JS_DEST_DIR));
+    }
+    bundleJS.displayName = `bundle_${filename}`;
+    return bundleJS;
+  });
+
+  return gulp.parallel(...tasks, (parallelDone) => {
+    parallelDone();
+    done();
+  })();
+}
+
+gulp.task("default", gulp.parallel("css", js));
