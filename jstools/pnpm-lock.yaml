@@ -11,6 +11,7 @@ specifiers:
   prettier: ^2.8.2
   rollup-stream: ^1.24.1
   tailwindcss: ^3.2.4
+  vinyl-buffer: ^1.0.1
   vinyl-source-stream: ^2.0.0
 
 devDependencies:
@@ -24,6 +25,7 @@ devDependencies:
   prettier: 2.8.2
   rollup-stream: 1.24.1
   tailwindcss: 3.2.4_postcss@8.4.21
+  vinyl-buffer: 1.0.1
   vinyl-source-stream: 2.0.0
 
 packages:
@@ -309,6 +311,13 @@ packages:
       file-uri-to-path: 1.0.0
     dev: true
     optional: true
+
+  /bl/1.2.3:
+    resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
+    dependencies:
+      readable-stream: 2.3.7
+      safe-buffer: 5.1.2
+    dev: true
 
   /boolbase/1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -3155,6 +3164,13 @@ packages:
   /value-or-function/3.0.0:
     resolution: {integrity: sha512-jdBB2FrWvQC/pnPtIqcLsMaQgjhdb6B7tk1MMyTKapox+tQZbdRP4uLxu/JY0t7fbfDCUMnuelzEYv5GsxHhdg==}
     engines: {node: '>= 0.10'}
+    dev: true
+
+  /vinyl-buffer/1.0.1:
+    resolution: {integrity: sha512-LRBE2/g3C1hSHL2k/FynSZcVTRhEw8sb08oKGt/0hukZXwrh2m8nfy+r5yLhGEk7eFFuclhyIuPct/Bxlxk6rg==}
+    dependencies:
+      bl: 1.2.3
+      through2: 2.0.5
     dev: true
 
   /vinyl-file/5.0.0:
