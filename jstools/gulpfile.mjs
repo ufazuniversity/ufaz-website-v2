@@ -18,7 +18,7 @@ gulp.task("css", () => {
     .pipe(postcss(plugins))
     .pipe(rev())
     .pipe(gulp.dest(dest))
-    .pipe(rev.manifest())
+    .pipe(rev.manifest('css-manifest.json'))
     .pipe(gulp.dest(dest));
 });
 
