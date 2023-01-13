@@ -5,6 +5,7 @@ specifiers:
   cssnano: ^5.1.14
   gulp: ^4.0.2
   gulp-cli: ^2.3.0
+  gulp-jsoncombine: ^1.0.4
   gulp-postcss: ^9.0.1
   gulp-rev: ^10.0.0
   postcss: ^8.4.20
@@ -19,6 +20,7 @@ devDependencies:
   cssnano: 5.1.14_postcss@8.4.21
   gulp: 4.0.2
   gulp-cli: 2.3.0
+  gulp-jsoncombine: 1.0.4
   gulp-postcss: 9.0.1_postcss@8.4.21
   gulp-rev: 10.0.0_gulp@4.0.2
   postcss: 8.4.21
@@ -97,8 +99,22 @@ packages:
       ansi-wrap: 0.1.0
     dev: true
 
+  /ansi-cyan/0.1.1:
+    resolution: {integrity: sha512-eCjan3AVo/SxZ0/MyIYRtkpxIu/H3xZN7URr1vXVrISxeyz8fUFz0FJziamK4sS8I+t35y4rHg1b2PklyBe/7A==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      ansi-wrap: 0.1.0
+    dev: true
+
   /ansi-gray/0.1.1:
     resolution: {integrity: sha512-HrgGIZUl8h2EHuZaU9hTR/cU5nhKxpVE1V6kdGsQ8e4zirElJ5fvtfc8N7Q1oq1aatO275i8pUFUCpNWCAnVWw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      ansi-wrap: 0.1.0
+    dev: true
+
+  /ansi-red/0.1.1:
+    resolution: {integrity: sha512-ewaIr5y+9CUTGFwZfpECUbFlGcC0GCw1oqR9RI6h1gQCd9Aj2GxSckCnPsVJnmfMZbwFYE+leZGASgkWl06Jow==}
     engines: {node: '>=0.10.0'}
     dependencies:
       ansi-wrap: 0.1.0
@@ -146,6 +162,14 @@ packages:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
     dev: true
 
+  /arr-diff/1.1.0:
+    resolution: {integrity: sha512-OQwDZUqYaQwyyhDJHThmzId8daf4/RFNLaeh3AevmSeZ5Y7ug4Ga/yKc6l6kTZOBW781rCj103ZuTh8GAsB3+Q==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      arr-flatten: 1.1.0
+      array-slice: 0.2.3
+    dev: true
+
   /arr-diff/4.0.0:
     resolution: {integrity: sha512-YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==}
     engines: {node: '>=0.10.0'}
@@ -168,6 +192,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       make-iterator: 1.0.1
+    dev: true
+
+  /arr-union/2.1.0:
+    resolution: {integrity: sha512-t5db90jq+qdgk8aFnxEkjqta0B/GHrM1pxzuuZz2zWsOXc5nKu3t+76s/PQBA8FTcM/ipspIH9jWG4OxCBc2eA==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /arr-union/3.1.0:
@@ -193,6 +222,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       is-number: 4.0.0
+    dev: true
+
+  /array-slice/0.2.3:
+    resolution: {integrity: sha512-rlVfZW/1Ph2SNySXwR9QYkChp8EkOEiTMO5Vwx60usw04i4nWemkm9RXmQqgkQFaLHsqLuADvjp6IfgL9l2M8Q==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /array-slice/1.1.0:
@@ -910,6 +944,13 @@ packages:
       type: 2.7.2
     dev: true
 
+  /extend-shallow/1.1.4:
+    resolution: {integrity: sha512-L7AGmkO6jhDkEBBGWlLtftA80Xq8DipnrRPr0pyi7GQLXkaq9JYA4xF4z6qnadIC6euiTDKco0cGSU9muw+WTw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      kind-of: 1.1.0
+    dev: true
+
   /extend-shallow/2.0.1:
     resolution: {integrity: sha512-zCnTtlxNoAiDc3gqY2aYAWFx7XWWiasuF2K8Me5WbN8otHKTUKBwjPtNpRs/rbUZm7KxWAaNj7P1a/p52GbVug==}
     engines: {node: '>=0.10.0'}
@@ -1258,6 +1299,15 @@ packages:
       yargs: 7.1.2
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /gulp-jsoncombine/1.0.4:
+    resolution: {integrity: sha512-Plq65IQf6RyZS5H3wZ+sRrwNoju5BhrbUtpnqfY2oZbsvF6+PfiXw96bXOlWQKZYlTFBv9d7pQhPs8KsWkXNZQ==}
+    engines: {node: '>=0.10.0', npm: '>=1.2.10'}
+    dependencies:
+      plugin-error: 0.1.2
+      through: 2.3.8
+      vinyl: 2.2.1
     dev: true
 
   /gulp-postcss/9.0.1_postcss@8.4.21:
@@ -1613,6 +1663,11 @@ packages:
 
   /just-debounce/1.1.0:
     resolution: {integrity: sha512-qpcRocdkUmf+UTNBYx5w6dexX5J31AKK1OmPwH630a83DdVVUIngk55RSAiIGpQyoH0dlr872VHfPjnQnK1qDQ==}
+    dev: true
+
+  /kind-of/1.1.0:
+    resolution: {integrity: sha512-aUH6ElPnMGon2/YkxRIigV32MOpTVcoXQ1Oo8aYn40s+sJ3j+0gFZsT8HKDcxNy7Fi9zuquWtGaGAahOdv5p/g==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /kind-of/3.2.2:
@@ -2081,6 +2136,17 @@ packages:
   /pinkie/2.0.4:
     resolution: {integrity: sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /plugin-error/0.1.2:
+    resolution: {integrity: sha512-WzZHcm4+GO34sjFMxQMqZbsz3xiNEgonCskQ9v+IroMmYgk/tas8dG+Hr2D6IbRPybZ12oWpzE/w3cGJ6FJzOw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      ansi-cyan: 0.1.1
+      ansi-red: 0.1.1
+      arr-diff: 1.1.0
+      arr-union: 2.1.0
+      extend-shallow: 1.1.4
     dev: true
 
   /plugin-error/1.0.1:
@@ -2986,6 +3052,10 @@ packages:
     resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
     dependencies:
       streamx: 2.13.1
+    dev: true
+
+  /through/2.3.8:
+    resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
   /through2-filter/3.0.0:

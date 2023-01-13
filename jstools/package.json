@@ -8,6 +8,7 @@
     "cssnano": "^5.1.14",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
+    "gulp-jsoncombine": "^1.0.4",
     "gulp-postcss": "^9.0.1",
     "gulp-rev": "^10.0.0",
     "postcss": "^8.4.20",
