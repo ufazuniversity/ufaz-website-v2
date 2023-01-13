@@ -9,15 +9,14 @@ import path from "path";
 import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import { fileURLToPath } from "url";
-
-
+import jsoncombine from "gulp-jsoncombine";
 
 const __filename = fileURLToPath(import.meta.url);
 const PROJECT_DIR = path.dirname(path.dirname(__filename));
 const BUILD_DIR = `${PROJECT_DIR}/static/dist`;
 const CSS_DEST_DIR = `${BUILD_DIR}/css`;
 const JS_DEST_DIR = `${BUILD_DIR}/js`;
-
+const MANIFEST_FILENAME = "manifest.json";
 
 const STYLESHEETS = ["/website/static/css/base.css"];
 
@@ -33,14 +32,15 @@ gulp.task("css", () => {
     .pipe(postcss(plugins))
     .pipe(rev())
     .pipe(gulp.dest(CSS_DEST_DIR))
-    .pipe(rev.manifest("css-manifest.json"))
+    .pipe(rev.manifest(MANIFEST_FILENAME))
     .pipe(gulp.dest(CSS_DEST_DIR));
 });
 
 function js(done) {
   const tasks = SCRIPTS.map((script) => {
-    script = `${PROJECT_DIR}${script}`
+    script = `${PROJECT_DIR}${script}`;
     let filename = path.basename(script);
+
     function bundleJS() {
       return rollup({
         input: script,
@@ -50,7 +50,7 @@ function js(done) {
         .pipe(buffer())
         .pipe(rev())
         .pipe(gulp.dest(JS_DEST_DIR))
-        .pipe(rev.manifest("js-manifest.json"))
+        .pipe(rev.manifest(MANIFEST_FILENAME))
         .pipe(gulp.dest(JS_DEST_DIR));
     }
     bundleJS.displayName = `bundle_${filename}`;
@@ -62,5 +62,4 @@ function js(done) {
     done();
   })();
 }
-
 gulp.task("default", gulp.parallel("css", js));
