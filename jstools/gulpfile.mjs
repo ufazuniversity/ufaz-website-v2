@@ -9,8 +9,8 @@ import path from "path";
 import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import { fileURLToPath } from "url";
-import jsoncombine from "gulp-jsoncombine";
 import { deleteAsync } from "del";
+import jeditor from "gulp-json-editor";
 
 const __filename = fileURLToPath(import.meta.url);
 const PROJECT_DIR = path.dirname(path.dirname(__filename));
@@ -28,6 +28,24 @@ gulp.task("clean", () => {
   return deleteAsync(BUILD_DIR, { force: true });
 });
 
+function normalizeManifest(data) {
+  let ret = {};
+  for (let [key, val] of Object.entries(data)) {
+    if (typeof val === "object") {
+      ret[key] = val;
+      continue;
+    }
+    let tokens = key.split(".");
+    let assetType = tokens.pop();
+    key = tokens.join();
+    if (!ret.hasOwnProperty(key)) {
+      ret[key] = {};
+    }
+    ret[key][assetType] = val;
+  }
+  return ret;
+}
+
 /* Process specified css stylesheets */
 gulp.task("css", () => {
   const plugins = [tailwindcss, autoprefixer, cssnano];
@@ -38,6 +56,7 @@ gulp.task("css", () => {
     .pipe(rev())
     .pipe(gulp.dest(CSS_DEST_DIR))
     .pipe(rev.manifest(MANIFEST_PATH, { base: BUILD_DIR, merge: true }))
+    .pipe(jeditor(normalizeManifest))
     .pipe(gulp.dest(BUILD_DIR));
 });
 
@@ -56,6 +75,7 @@ function js(done) {
         .pipe(rev())
         .pipe(gulp.dest(JS_DEST_DIR))
         .pipe(rev.manifest(MANIFEST_PATH, { base: BUILD_DIR, merge: true }))
+        .pipe(jeditor(normalizeManifest))
         .pipe(gulp.dest(BUILD_DIR));
     }
     bundleJS.displayName = `bundle_${filename}`;
@@ -68,5 +88,5 @@ function js(done) {
   })();
 }
 
-gulp.task("build", gulp.series("css", js));
+gulp.task("build", gulp.series(gulp.parallel(js, "css")));
 gulp.task("default", gulp.series("clean", "build"));
