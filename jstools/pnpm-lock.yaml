@@ -7,6 +7,7 @@ specifiers:
   gulp: ^4.0.2
   gulp-cli: ^2.3.0
   gulp-json-editor: ^2.5.6
+  gulp-merge-json: ^2.1.2
   gulp-postcss: ^9.0.1
   gulp-rev: ^10.0.0
   postcss: ^8.4.20
@@ -23,6 +24,7 @@ devDependencies:
   gulp: 4.0.2
   gulp-cli: 2.3.0
   gulp-json-editor: 2.5.6
+  gulp-merge-json: 2.1.2
   gulp-postcss: 9.0.1_postcss@8.4.21
   gulp-rev: 10.0.0_gulp@4.0.2
   postcss: 8.4.21
@@ -1378,6 +1380,16 @@ packages:
       through2: 4.0.2
     dev: true
 
+  /gulp-merge-json/2.1.2:
+    resolution: {integrity: sha512-FysBAdHdnQvZzigVJJzlrt6TEosHxVb0mR2h/8eSnd+eJyBvb1LQF1EIrovrOCfj4HGE5p/95wGEjXsJk9qomw==}
+    dependencies:
+      json5: 2.2.3
+      lodash.mergewith: 4.6.2
+      plugin-error: 1.0.1
+      through: 2.3.8
+      vinyl: 2.2.1
+    dev: true
+
   /gulp-postcss/9.0.1_postcss@8.4.21:
     resolution: {integrity: sha512-9QUHam5JyXwGUxaaMvoFQVT44tohpEFpM8xBdPfdwTYGM0AItS1iTQz0MpsF8Jroh7GF5Jt2GVPaYgvy8qD2Fw==}
     engines: {node: ^10 || ^12 || >=14}
@@ -1760,6 +1772,12 @@ packages:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
 
+  /json5/2.2.3:
+    resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
+    engines: {node: '>=6'}
+    hasBin: true
+    dev: true
+
   /just-debounce/1.1.0:
     resolution: {integrity: sha512-qpcRocdkUmf+UTNBYx5w6dexX5J31AKK1OmPwH630a83DdVVUIngk55RSAiIGpQyoH0dlr872VHfPjnQnK1qDQ==}
     dev: true
@@ -1851,6 +1869,10 @@ packages:
 
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
+    dev: true
+
+  /lodash.mergewith/4.6.2:
+    resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
     dev: true
 
   /lodash.uniq/4.5.0:
@@ -3202,6 +3224,10 @@ packages:
     resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
     dependencies:
       streamx: 2.13.1
+    dev: true
+
+  /through/2.3.8:
+    resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
   /through2-filter/3.0.0:
