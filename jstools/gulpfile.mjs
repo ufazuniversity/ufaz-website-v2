@@ -10,6 +10,7 @@ import source from "vinyl-source-stream";
 import buffer from "vinyl-buffer";
 import { fileURLToPath } from "url";
 import { deleteAsync } from "del";
+import merge from "gulp-merge-json";
 import jeditor from "gulp-json-editor";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +18,7 @@ const PROJECT_DIR = path.dirname(path.dirname(__filename));
 const BUILD_DIR = `${PROJECT_DIR}/static/dist`;
 const CSS_DEST_DIR = `${BUILD_DIR}/css`;
 const JS_DEST_DIR = `${BUILD_DIR}/js`;
-const MANIFEST_PATH = `${BUILD_DIR}/manifest.json`;
+const MANIFEST_FILENAME = "manifest.json";
 
 const STYLESHEETS = ["/website/static/css/base.css"];
 
@@ -28,24 +29,6 @@ gulp.task("clean", () => {
   return deleteAsync(BUILD_DIR, { force: true });
 });
 
-function normalizeManifest(data) {
-  let ret = {};
-  for (let [key, val] of Object.entries(data)) {
-    if (typeof val === "object") {
-      ret[key] = val;
-      continue;
-    }
-    let tokens = key.split(".");
-    let assetType = tokens.pop();
-    key = tokens.join();
-    if (!ret.hasOwnProperty(key)) {
-      ret[key] = {};
-    }
-    ret[key][assetType] = val;
-  }
-  return ret;
-}
-
 /* Process specified css stylesheets */
 gulp.task("css", () => {
   const plugins = [tailwindcss, autoprefixer, cssnano];
@@ -55,9 +38,8 @@ gulp.task("css", () => {
     .pipe(postcss(plugins))
     .pipe(rev())
     .pipe(gulp.dest(CSS_DEST_DIR))
-    .pipe(rev.manifest(MANIFEST_PATH, { base: BUILD_DIR, merge: true }))
-    .pipe(jeditor(normalizeManifest))
-    .pipe(gulp.dest(BUILD_DIR));
+    .pipe(rev.manifest(MANIFEST_FILENAME))
+    .pipe(gulp.dest(CSS_DEST_DIR));
 });
 
 function js(done) {
@@ -74,9 +56,8 @@ function js(done) {
         .pipe(buffer())
         .pipe(rev())
         .pipe(gulp.dest(JS_DEST_DIR))
-        .pipe(rev.manifest(MANIFEST_PATH, { base: BUILD_DIR, merge: true }))
-        .pipe(jeditor(normalizeManifest))
-        .pipe(gulp.dest(BUILD_DIR));
+        .pipe(rev.manifest(MANIFEST_FILENAME))
+        .pipe(gulp.dest(JS_DEST_DIR));
     }
     bundleJS.displayName = `bundle_${filename}`;
     return bundleJS;
@@ -88,5 +69,27 @@ function js(done) {
   })();
 }
 
-gulp.task("build", gulp.series(gulp.parallel(js, "css")));
+function normalizeManifest(data) {
+  let ret = {};
+  for (let [key, val] of Object.entries(data)) {
+    let tokens = key.split(".");
+    let assetType = tokens.pop();
+    key = tokens.join();
+    if (!ret.hasOwnProperty(key)) {
+      ret[key] = {};
+    }
+    ret[key][assetType] = val;
+  }
+  return ret;
+}
+
+gulp.task("singleManifest", () => {
+  return gulp
+    .src("/**/manifest.json", { root: BUILD_DIR })
+    .pipe(merge({ fileName: MANIFEST_FILENAME }))
+    .pipe(jeditor(normalizeManifest))
+    .pipe(gulp.dest(BUILD_DIR));
+});
+
+gulp.task("build", gulp.series(gulp.parallel(js, "css"), "singleManifest"));
 gulp.task("default", gulp.series("clean", "build"));
