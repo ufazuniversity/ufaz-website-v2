@@ -94,3 +94,9 @@ gulp.task("singleManifest", () => {
 
 gulp.task("build", gulp.series(gulp.parallel(js, "css"), "singleManifest"));
 gulp.task("default", gulp.series("clean", "build"));
+gulp.task("watch", () => {
+  gulp.watch(
+    ["../**/static/css/*.css", "../**/static/js/*.js"],
+    gulp.series("default")
+  );
+});
