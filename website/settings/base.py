@@ -139,7 +139,6 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
-    os.path.join(BASE_DIR, "static"),
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
@@ -176,4 +175,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Gulp build dir relative to the static directory
 GULP_BUILD_DIR = "dist"
-GULP_MANIFEST_PATH = os.path.join(BASE_DIR, "static", GULP_BUILD_DIR, "manifest.json")
+GULP_MANIFEST_PATH = os.path.join(PROJECT_DIR, "static", GULP_BUILD_DIR, "manifest.json")

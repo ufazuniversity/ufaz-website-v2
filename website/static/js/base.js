@@ -1,3 +1,1 @@
-let variable = "Hello"
-
-console.log(variable)
+alert("This is from base.js");
