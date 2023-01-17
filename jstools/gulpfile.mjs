@@ -14,7 +14,8 @@ import merge from "gulp-merge-json";
 import jeditor from "gulp-json-editor";
 
 const __filename = fileURLToPath(import.meta.url);
-const PROJECT_DIR = path.dirname(path.dirname(__filename));
+const BASE_DIR = path.dirname(path.dirname(__filename));
+const PROJECT_DIR = path.join(BASE_DIR, "website");
 const BUILD_DIR = `${PROJECT_DIR}/static/dist`;
 const CSS_DEST_DIR = `${BUILD_DIR}/css`;
 const JS_DEST_DIR = `${BUILD_DIR}/js`;
@@ -44,7 +45,7 @@ gulp.task("css", () => {
 
 function js(done) {
   const tasks = SCRIPTS.map((script) => {
-    script = `${PROJECT_DIR}${script}`;
+    script = `${BASE_DIR}${script}`;
     let filename = path.basename(script);
 
     function bundleJS() {
