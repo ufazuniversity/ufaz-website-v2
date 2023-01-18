@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
+    "django_watchfiles",
     "core",
     "home",
     "search",
@@ -42,7 +43,6 @@ INSTALLED_APPS = [
     "wagtailmenus",
     "modelcluster",
     "taggit",
-    "django_watchfiles",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
