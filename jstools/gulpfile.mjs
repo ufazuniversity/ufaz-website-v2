@@ -26,10 +26,6 @@ const STYLESHEETS = ["/website/static/css/base.css"];
 // Should be relative to the PROJECT_DIR
 const SCRIPTS = ["/website/static/js/base.js"];
 
-gulp.task("clean", () => {
-  return deleteAsync(BUILD_DIR, { force: true });
-});
-
 /* Process specified css stylesheets */
 gulp.task("css", () => {
   const plugins = [tailwindcss, autoprefixer, cssnano];
@@ -41,6 +37,10 @@ gulp.task("css", () => {
     .pipe(gulp.dest(CSS_DEST_DIR))
     .pipe(rev.manifest(MANIFEST_FILENAME))
     .pipe(gulp.dest(CSS_DEST_DIR));
+});
+
+gulp.task("cleanCSS", () => {
+  return deleteAsync(CSS_DEST_DIR, { force: true });
 });
 
 function js(done) {
@@ -70,6 +70,12 @@ function js(done) {
   })();
 }
 
+gulp.task("cleanJS", () => {
+  return deleteAsync(JS_DEST_DIR, { force: true });
+});
+
+gulp.task("clean", gulp.parallel("cleanCSS", "cleanJS"));
+
 function normalizeManifest(data) {
   let ret = {};
   for (let [key, val] of Object.entries(data)) {
@@ -84,19 +90,26 @@ function normalizeManifest(data) {
   return ret;
 }
 
-gulp.task("singleManifest", () => {
+gulp.task("manifest", () => {
   return gulp
-    .src("/**/manifest.json", { root: BUILD_DIR })
+    .src("/*/manifest.json", { root: BUILD_DIR })
     .pipe(merge({ fileName: MANIFEST_FILENAME }))
     .pipe(jeditor(normalizeManifest))
     .pipe(gulp.dest(BUILD_DIR));
 });
 
-gulp.task("build", gulp.series(gulp.parallel(js, "css"), "singleManifest"));
+gulp.task("build", gulp.series(gulp.parallel(js, "css"), "manifest"));
 gulp.task("default", gulp.series("clean", "build"));
-gulp.task("watch", () => {
+
+gulp.task("watchCSS", () => {
   gulp.watch(
-    ["../**/static/css/*.css", "../**/static/js/*.js"],
-    gulp.series("default")
+    "../**/static/css/**/*.css",
+    gulp.series("cleanCSS", "css", "manifest")
   );
 });
+
+gulp.task("watchJS", () => {
+  gulp.watch("../**/static/js/**/*.js", gulp.series("cleanJS", js, "manifest"));
+});
+
+gulp.task("watch", gulp.parallel("watchCSS", "watchJS"));
