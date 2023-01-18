@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.modeladmin",
     "wagtailmenus",
     "modelcluster",
+    "django_browser_reload",
     "taggit",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -176,4 +177,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Gulp build dir relative to the static directory
 GULP_BUILD_DIR = "dist"
-GULP_MANIFEST_PATH = os.path.join(PROJECT_DIR, "static", GULP_BUILD_DIR, "manifest.json")
+GULP_MANIFEST_PATH = os.path.join(
+    PROJECT_DIR, "static", GULP_BUILD_DIR, "manifest.json"
+)
