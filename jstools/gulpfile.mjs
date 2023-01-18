@@ -13,6 +13,7 @@ import { deleteAsync } from "del";
 import merge from "gulp-merge-json";
 import jeditor from "gulp-json-editor";
 import atImport from "postcss-import";
+import url from "postcss-url";
 
 const __filename = fileURLToPath(import.meta.url);
 const BASE_DIR = path.dirname(path.dirname(__filename));
@@ -29,7 +30,17 @@ const SCRIPTS = ["/website/static/js/base.js"];
 
 /* Process specified css stylesheets */
 
-const postcss_plugins = [atImport, tailwindcss, autoprefixer, cssnano];
+const urlOptions = {
+  url: "inline",
+};
+
+const postcss_plugins = [
+  atImport,
+  tailwindcss,
+  autoprefixer,
+  cssnano,
+  url(urlOptions),
+];
 
 gulp.task("css", () => {
   return gulp
