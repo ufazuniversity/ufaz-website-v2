@@ -80,6 +80,11 @@ asset_loader = AssetLoader(manifest_path=MANIFEST_PATH, assets_root=ASSETS_ROOT)
 @register.simple_tag
 @safestring.mark_safe
 def asset(name, ext: str = None, *args, **kwargs) -> str:
+
+    if settings.DEBUG == True:
+        # Temporary code to run on all autoreloads
+        asset_loader = AssetLoader(manifest_path=MANIFEST_PATH, assets_root=ASSETS_ROOT)
+
     if name is None or name == "":
         raise template.TemplateSyntaxError("Name is required")
     if ext is not None and ext not in [JS, CSS]:
