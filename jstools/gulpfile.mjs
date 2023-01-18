@@ -12,6 +12,7 @@ import { fileURLToPath } from "url";
 import { deleteAsync } from "del";
 import merge from "gulp-merge-json";
 import jeditor from "gulp-json-editor";
+import atImport from "postcss-import";
 
 const __filename = fileURLToPath(import.meta.url);
 const BASE_DIR = path.dirname(path.dirname(__filename));
@@ -27,12 +28,13 @@ const STYLESHEETS = ["/website/static/css/base.css"];
 const SCRIPTS = ["/website/static/js/base.js"];
 
 /* Process specified css stylesheets */
-gulp.task("css", () => {
-  const plugins = [tailwindcss, autoprefixer, cssnano];
 
+const postcss_plugins = [atImport, tailwindcss, autoprefixer, cssnano];
+
+gulp.task("css", () => {
   return gulp
     .src(STYLESHEETS, { root: "../" })
-    .pipe(postcss(plugins))
+    .pipe(postcss(postcss_plugins))
     .pipe(rev())
     .pipe(gulp.dest(CSS_DEST_DIR))
     .pipe(rev.manifest(MANIFEST_FILENAME))
