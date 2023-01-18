@@ -64,8 +64,8 @@ function js(done) {
     return bundleJS;
   });
 
-  return gulp.parallel(...tasks, (parallelDone) => {
-    parallelDone();
+  return gulp.series(...tasks, (seriesDone) => {
+    seriesDone();
     done();
   })();
 }
@@ -92,7 +92,7 @@ function normalizeManifest(data) {
 
 gulp.task("manifest", () => {
   return gulp
-    .src("/*/manifest.json", { root: BUILD_DIR })
+    .src(["/css/manifest.json", "/js/manifest.json"], { root: BUILD_DIR })
     .pipe(merge({ fileName: MANIFEST_FILENAME }))
     .pipe(jeditor(normalizeManifest))
     .pipe(gulp.dest(BUILD_DIR));
@@ -109,7 +109,10 @@ gulp.task("watchCSS", () => {
 });
 
 gulp.task("watchJS", () => {
-  gulp.watch("../**/static/js/**/*.js", gulp.series("cleanJS", js, "manifest"));
+  gulp.watch(
+    "../**/static/js/**/*.js",
+    gulp.series(gulp.series("cleanJS", js), "manifest")
+  );
 });
 
 gulp.task("watch", gulp.parallel("watchCSS", "watchJS"));
