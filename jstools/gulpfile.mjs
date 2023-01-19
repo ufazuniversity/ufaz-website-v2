@@ -60,7 +60,7 @@ function js(done) {
         .pipe(buffer())
         .pipe(rev())
         .pipe(gulp.dest(JS_DEST_DIR))
-        .pipe(rev.manifest(MANIFEST_FILENAME))
+        .pipe(rev.manifest(MANIFEST_FILENAME, { merge: true }))
         .pipe(gulp.dest(JS_DEST_DIR));
     }
     bundleJS.displayName = `bundle_${filename}`;
