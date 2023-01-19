@@ -13,6 +13,7 @@
     "gulp-merge-json": "^2.1.2",
     "gulp-postcss": "^9.0.1",
     "gulp-rev": "^10.0.0",
+    "gulp-rollup-each": "^4.0.1",
     "postcss": "^8.4.20",
     "postcss-assets": "^6.0.0",
     "postcss-import": "^15.1.0",
