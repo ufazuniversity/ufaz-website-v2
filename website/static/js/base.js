@@ -1,1 +1,3 @@
-alert("This is from base.js");
+import initiateHeader from "./components/navbar";
+
+initiateHeader();

@@ -1,0 +1,5 @@
+.mobile-nav-toggle {
+    /*noinspection CssInvalidFunction*/
+    background-image: inline("../img/icon-close.svg");
+    color: white;
+}

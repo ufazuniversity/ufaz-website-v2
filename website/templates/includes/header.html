@@ -1,12 +1,12 @@
 {% load menu_tags static %}
 
-<header id="site-header">
+<header class="site-header">
     <div class="flex  sticky">
         <div class="w-1/4 p-4 bg-white">
             <img class="max-w-full" src="{% static '/img/logo.png' %}" alt="">
         </div>
     </div>
-    <button class="" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
+    <button class="mobile-nav-toggle absolute top-2 right-2 z-[9999]" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
     <div id="navigation" class="p-4 py-16 text-lg bg-slate-100 fixed inset-0 left-1/4">
         <div class="mb-4">
         {% flat_menu 'secondary' %}
