@@ -4,10 +4,8 @@ import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import rev from "gulp-rev";
-import rollup from "rollup-stream";
+import rollupEach from "gulp-rollup-each";
 import path from "path";
-import source from "vinyl-source-stream";
-import buffer from "vinyl-buffer";
 import { fileURLToPath } from "url";
 import { deleteAsync } from "del";
 import merge from "gulp-merge-json";
@@ -34,7 +32,7 @@ const postcss_plugins = [assets, atImport, tailwindcss, autoprefixer, cssnano];
 
 gulp.task("css", () => {
   return gulp
-    .src(STYLESHEETS, { root: "../" })
+    .src(STYLESHEETS, { root: BASE_DIR })
     .pipe(postcss(postcss_plugins))
     .pipe(rev())
     .pipe(gulp.dest(CSS_DEST_DIR))
@@ -46,32 +44,21 @@ gulp.task("cleanCSS", () => {
   return deleteAsync(CSS_DEST_DIR, { force: true });
 });
 
-function js(done) {
-  const tasks = SCRIPTS.map((script) => {
-    script = `${BASE_DIR}${script}`;
-    let filename = path.basename(script);
-
-    function bundleJS() {
-      return rollup({
-        input: script,
-        format: "es",
+gulp.task("js", () => {
+  return gulp
+    .src(SCRIPTS, { root: BASE_DIR })
+    .pipe(
+      rollupEach({
+        output: {
+          format: "es",
+        },
       })
-        .pipe(source(filename))
-        .pipe(buffer())
-        .pipe(rev())
-        .pipe(gulp.dest(JS_DEST_DIR))
-        .pipe(rev.manifest(MANIFEST_FILENAME, { merge: true }))
-        .pipe(gulp.dest(JS_DEST_DIR));
-    }
-    bundleJS.displayName = `bundle_${filename}`;
-    return bundleJS;
-  });
-
-  return gulp.series(...tasks, (seriesDone) => {
-    seriesDone();
-    done();
-  })();
-}
+    )
+    .pipe(rev())
+    .pipe(gulp.dest(JS_DEST_DIR))
+    .pipe(rev.manifest(MANIFEST_FILENAME))
+    .pipe(gulp.dest(JS_DEST_DIR));
+});
 
 gulp.task("cleanJS", () => {
   return deleteAsync(JS_DEST_DIR, { force: true });
@@ -95,14 +82,17 @@ function normalizeManifest(data) {
 
 gulp.task("manifest", () => {
   return gulp
-    .src(["/css/manifest.json", "/js/manifest.json"], { root: BUILD_DIR })
+    .src("/{css,js}/manifest.json", { root: BUILD_DIR })
     .pipe(merge({ fileName: MANIFEST_FILENAME }))
     .pipe(jeditor(normalizeManifest))
     .pipe(gulp.dest(BUILD_DIR));
 });
 
-gulp.task("build", gulp.series("clean", gulp.parallel(js, "css"), "manifest"));
-gulp.task("default", gulp.series("clean", "build"));
+gulp.task(
+  "build",
+  gulp.series("clean", gulp.parallel("css", "js"), "manifest")
+);
+gulp.task("default", gulp.series("build"));
 
 gulp.task("watchCSS", () => {
   gulp.watch(
