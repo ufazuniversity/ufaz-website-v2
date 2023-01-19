@@ -104,7 +104,7 @@ gulp.task("watchCSS", () => {
 gulp.task("watchJS", () => {
   gulp.watch(
     "../**/static/js/**/*.js",
-    gulp.series(gulp.series("cleanJS", js), "manifest")
+    gulp.series(gulp.series("cleanJS", "js"), "manifest")
   );
 });
 
