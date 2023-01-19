@@ -13,7 +13,7 @@ import { deleteAsync } from "del";
 import merge from "gulp-merge-json";
 import jeditor from "gulp-json-editor";
 import atImport from "postcss-import";
-import url from "postcss-url";
+import assets from "postcss-assets";
 
 const __filename = fileURLToPath(import.meta.url);
 const BASE_DIR = path.dirname(path.dirname(__filename));
@@ -30,17 +30,7 @@ const SCRIPTS = ["/website/static/js/base.js"];
 
 /* Process specified css stylesheets */
 
-const urlOptions = {
-  url: "inline",
-};
-
-const postcss_plugins = [
-  atImport,
-  tailwindcss,
-  autoprefixer,
-  cssnano,
-  url(urlOptions),
-];
+const postcss_plugins = [assets, atImport, tailwindcss, autoprefixer, cssnano];
 
 gulp.task("css", () => {
   return gulp
@@ -87,7 +77,7 @@ gulp.task("cleanJS", () => {
   return deleteAsync(JS_DEST_DIR, { force: true });
 });
 
-gulp.task("clean", gulp.parallel("cleanCSS", "cleanJS"));
+gulp.task("clean", gulp.series("cleanCSS", "cleanJS"));
 
 function normalizeManifest(data) {
   let ret = {};
@@ -111,7 +101,7 @@ gulp.task("manifest", () => {
     .pipe(gulp.dest(BUILD_DIR));
 });
 
-gulp.task("build", gulp.series(gulp.parallel(js, "css"), "manifest"));
+gulp.task("build", gulp.series("clean", gulp.parallel(js, "css"), "manifest"));
 gulp.task("default", gulp.series("clean", "build"));
 
 gulp.task("watchCSS", () => {
