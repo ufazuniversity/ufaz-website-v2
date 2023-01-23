@@ -96,7 +96,7 @@ gulp.task("default", gulp.series("build"));
 
 gulp.task("watchCSS", () => {
   gulp.watch(
-    "../**/static/css/**/*.css",
+    ["../**/static/css/**/*.css", "../**/*.html"],
     gulp.series("cleanCSS", "css", "manifest")
   );
 });
