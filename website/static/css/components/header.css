@@ -1,5 +1,8 @@
 .mobile-nav-toggle {
     /*noinspection CssInvalidFunction*/
     background-image: inline("../img/icon-close.svg");
-    color: white;
+}
+
+#sitesearch-form .search-btn {
+    background-image: inline("../img/icon-search.svg");
 }

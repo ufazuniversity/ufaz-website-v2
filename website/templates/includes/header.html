@@ -6,11 +6,16 @@
             <img class="max-w-full" src="{% static '/img/logo.png' %}" alt="">
         </div>
     </div>
-    <button class="mobile-nav-toggle absolute top-2 right-2 z-[9999]" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
+    <button class="mobile-nav-toggle absolute top-2 right-2 z-[9999] h-8 w-8 bg-no-repeat bg-auto bg-center" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
     <div id="navigation" class="p-4 py-16 text-lg bg-slate-100 fixed inset-0 left-1/4">
-        <div class="mb-4">
-        {% flat_menu 'secondary' %}
+        {% include 'includes/site-search.html' %}
+        <div class="mb-4 border-dashed border-4 border-red-300 text-sm">
+            Secondary menu
+        {% comment %}{% flat_menu 'secondary' %}{% endcomment %}
         </div>
-        {% main_menu %}
+        <div class="border-dashed border-4 border-red-300 text-sm">
+            Primary menu
+            {% comment %}{% main_menu %}{% endcomment %}
+        </div>
     </div>
 </header>
