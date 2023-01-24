@@ -1,3 +1,1 @@
-import initiateHeader from "./components/navbar";
-
-initiateHeader();
+import initiateHeader from "./components/header";
