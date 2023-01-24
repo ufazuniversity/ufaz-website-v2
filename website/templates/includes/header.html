@@ -1,13 +1,13 @@
 {% load menu_tags static %}
 
-<header class="site-header">
-    <div class="flex  sticky">
+<header class="site-header border-dashed border-4 box-border border-gray-500">
+    <div class="flex sticky">
         <div class="w-1/4 p-4 bg-white">
             <img class="max-w-full" src="{% static '/img/logo.png' %}" alt="">
         </div>
     </div>
-    <button class="mobile-nav-toggle absolute top-2 right-2 z-[9999] h-8 w-8 bg-no-repeat bg-auto bg-center" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
-    <div id="navigation" class="p-4 py-16 text-lg bg-slate-100 fixed inset-0 left-1/4">
+    <button class="mobile-nav-toggle absolute top-3 right-3 z-[9999] h-8 w-8 bg-no-repeat bg-auto bg-center" aria-controls="navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
+    <div id="navigation" data-visible="false" class="fixed inset-0 left-1/4 border-dashed border-4 border-black p-4 py-12 bg-slate-100 translate-x-full">
         {% include 'includes/site-search.html' %}
         <div class="mb-4 border-dashed border-4 border-red-300 text-sm">
             Secondary menu

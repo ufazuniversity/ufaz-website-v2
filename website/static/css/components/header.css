@@ -1,8 +1,22 @@
 .mobile-nav-toggle {
     /*noinspection CssInvalidFunction*/
-    background-image: inline("../img/icon-close.svg");
+    background-image: inline("../img/icon-hamburger.svg");
 }
 
 #sitesearch-form .search-btn {
+    /*noinspection CssInvalidFunction*/
     background-image: inline("../img/icon-search.svg");
+}
+
+#navigation {
+    transition: transform 350ms;
+    overflow-x: hidden;
+}
+
+#navigation[data-visible="true"]{
+    transform: translateX(0%);
+}
+
+.mobile-nav-toggle[aria-expanded="true"]{
+    background-image: inline("../img/icon-close.svg");
 }
